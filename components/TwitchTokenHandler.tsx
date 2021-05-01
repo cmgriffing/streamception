@@ -18,22 +18,16 @@ export default function BaseTwitchTokenHandler() {
       const token = window.location.hash.split("&")[0]?.substring(14);
       window.localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token);
 
-      axios
-        .get(`/api/get-twitch-details`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response: any) => {
-          window.localStorage.setItem(
-            LOCALSTORAGE_TWITCH_ID_KEY,
-            response.data.twitchId
-          );
-          window.localStorage.setItem(
-            LOCALSTORAGE_TWITCH_NAME_KEY,
-            response.data.channelName
-          );
-        });
+      axios.get(`/api/get-twitch-details`).then((response: any) => {
+        window.localStorage.setItem(
+          LOCALSTORAGE_TWITCH_ID_KEY,
+          response.data.twitchId
+        );
+        window.localStorage.setItem(
+          LOCALSTORAGE_TWITCH_NAME_KEY,
+          response.data.channelName
+        );
+      });
     }
   }, [router]);
 
@@ -47,9 +41,10 @@ export default function BaseTwitchTokenHandler() {
     if (previousRoute.indexOf("/invite") > -1) {
       const routeParts = previousRoute.split("/");
       const twitchId = routeParts[routeParts.length - 1];
-      ky.post(`/add-host`, {
-        body: JSON.stringify({ twitchId }),
-      })
+      axios
+        .post(`/add-host`, {
+          twitchId,
+        })
         .then(() => {
           router.push("/dashboard/guest");
         })
