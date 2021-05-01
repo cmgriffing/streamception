@@ -4,8 +4,6 @@ import { CenteredContainer, CenteredCard } from "../components/common";
 export default function Login() {
   let redirectUrl = process.env.TWITCH_REDIRECT_URL;
 
-  redirectUrl = `https://608ca76ef64537545408abd4--gracious-agnesi-9a6325.netlify.app/callback`;
-
   return (
     <CenteredContainer>
       <CenteredCard>
