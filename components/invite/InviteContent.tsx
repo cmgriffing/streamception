@@ -3,7 +3,7 @@ import useAxios from "../../hooks/useAxios";
 import { LOCALSTORAGE_PREVIOUS_ROUTE_KEY } from "../../hooks/usePreviousRoute";
 import useToken from "../../hooks/useToken";
 
-export default function InviteContent() {
+export default function InviteContent({ clientId, redirectUrl }) {
   const router = useRouter();
   const [token] = useToken();
   const axios = useAxios(token);
@@ -26,7 +26,7 @@ export default function InviteContent() {
         `/invite/twitchId`
       );
 
-      const url = `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=${process.env.TWITCH_REDIRECT_URL}&response_type=token&scope=user_read`;
+      const url = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`;
 
       window.location.href = url;
     }
@@ -48,4 +48,13 @@ export default function InviteContent() {
       </button>
     </>
   );
+}
+
+export async function getStaticProps(context) {
+  return {
+    props: {
+      clientId: process.env.TWITCH_CLIENT_ID,
+      redirectUrl: process.env.TWITCH_REDIRECT_URL,
+    },
+  };
 }

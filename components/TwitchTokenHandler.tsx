@@ -17,7 +17,6 @@ export default function BaseTwitchTokenHandler() {
     if (typeof window !== "undefined") {
       const token = window.location.hash.split("&")[0]?.substring(14);
       window.localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token);
-
       axios.get(`/api/get-twitch-details`).then((response: any) => {
         window.localStorage.setItem(
           LOCALSTORAGE_TWITCH_ID_KEY,

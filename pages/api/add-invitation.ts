@@ -15,10 +15,6 @@ export default withUser(async function handler(
     const { twitchId, allowed } = req.body;
     const { display_name, id } = req.user;
 
-    if (id !== twitchId) {
-      return res.status(403);
-    }
-
     const invitation: DBInvitation = {
       hostId: twitchId,
       guestId: id,
