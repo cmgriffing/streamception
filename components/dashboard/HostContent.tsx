@@ -37,7 +37,7 @@ export default function GuestContent() {
     const date = new Date(guest.createdDate);
     return (
       <div key={guest.createdDate}>
-        {guest.channelName} - {JSON.stringify(guest.allowed)} -{" "}
+        {guest.guestChannelName} - {JSON.stringify(guest.allowed)} -{" "}
         {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
       </div>
     );
@@ -47,7 +47,7 @@ export default function GuestContent() {
     const date = new Date(guest.createdDate);
     return (
       <div key={guest.createdDate}>
-        {guest.channelName} - {JSON.stringify(guest.allowed)} -{" "}
+        {guest.guestChannelName} - {JSON.stringify(guest.allowed)} -{" "}
         {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
       </div>
     );

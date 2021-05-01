@@ -2,6 +2,7 @@ import { DB_INDEX_GUEST_HOSTS } from "./../../util/constants";
 import { NextApiRequest, NextApiResponse } from "next";
 import { withUser, NextApiRequestWithUser } from "../../util/withUser";
 import faunadb from "faunadb";
+import { getTwitchDetails } from "../../util/getTwitchDetails";
 const q = faunadb.query;
 
 const faunaClient = new faunadb.Client({

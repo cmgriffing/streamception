@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { withUser, NextApiRequestWithUser } from "../../util/withUser";
 import { DBInvitation } from "../../util/types";
 import faunadb from "faunadb";
+import { getTwitchDetails } from "../../util/getTwitchDetails";
 const q = faunadb.query;
 
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
@@ -14,13 +15,17 @@ export default withUser(async function handler(
   if (req.user) {
     const { twitchId, allowed } = req.body;
     const { display_name, id } = req.user;
+    const [_, token] = req.headers["authorization"]?.split(" ");
+
+    const hostDetails = await getTwitchDetails(token, twitchId);
 
     const invitation: DBInvitation = {
       hostId: twitchId,
       guestId: id,
       allowed: allowed,
       createdDate: Date.now(),
-      channelName: display_name,
+      hostChannelName: hostDetails.display_name,
+      guestChannelName: display_name,
     };
 
     await client

@@ -37,8 +37,8 @@ export default function GuestContent() {
     const date = new Date(host.createdDate);
     return (
       <div key={host.createdDate}>
-        {host.channelName} - {JSON.stringify(host.allowed)} - {date.getMonth()}/
-        {date.getDate()}/{date.getFullYear()}
+        {host.hostChannelName} - {JSON.stringify(host.allowed)} -{" "}
+        {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
       </div>
     );
   });
@@ -47,8 +47,8 @@ export default function GuestContent() {
     const date = new Date(host.createdDate);
     return (
       <div key={host.createdDate}>
-        {host.channelName} - {JSON.stringify(host.allowed)} - {date.getMonth()}/
-        {date.getDate()}/{date.getFullYear()}
+        {host.hostChannelName} - {JSON.stringify(host.allowed)} -{" "}
+        {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
       </div>
     );
   });
