@@ -49,12 +49,3 @@ export default function InviteContent({ clientId, redirectUrl }) {
     </>
   );
 }
-
-export async function getStaticProps(context) {
-  return {
-    props: {
-      clientId: process.env.TWITCH_CLIENT_ID,
-      redirectUrl: process.env.TWITCH_REDIRECT_URL,
-    },
-  };
-}

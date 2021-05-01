@@ -6,14 +6,23 @@ const InviteContent = dynamic(
   { ssr: false }
 );
 
-export default function Invite() {
+export default function Invite(props) {
   return (
     <div>
       <CenteredContainer>
         <CenteredCard>
-          <InviteContent />
+          <InviteContent {...props} />
         </CenteredCard>
       </CenteredContainer>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      clientId: process.env.TWITCH_CLIENT_ID,
+      redirectUrl: process.env.TWITCH_REDIRECT_URL,
+    },
+  };
 }
