@@ -18,8 +18,15 @@ export default withUser(async function handler(
       q.Paginate(q.Match(q.Index(DB_INDEX_GUEST_HOSTS), req.user.id))
     );
     const hosts = hostsArrays.data.map(
-      ([channelName, allowed, hostId, createdDate]) => ({
-        channelName,
+      ([
+        createdDate,
+        allowed,
+        hostId,
+        hostChannelName,
+        guestId,
+        guestChannelName,
+      ]) => ({
+        hostChannelName,
         hostId,
         createdDate,
         allowed,
