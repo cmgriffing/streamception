@@ -1,4 +1,4 @@
-import { DB_INDEX_GUEST_HOSTS } from "./../../util/constants";
+import { DB_INDEX_HOST_GUESTS } from "./../../util/constants";
 import { NextApiRequest, NextApiResponse } from "next";
 import { withUser, NextApiRequestWithUser } from "../../util/withUser";
 import faunadb from "faunadb";
@@ -14,7 +14,7 @@ export default withUser(async function handler(
 ) {
   if (req.user) {
     const guestsArrays: { data: any[][] } = await faunaClient.query(
-      q.Paginate(q.Match(q.Index(DB_INDEX_GUEST_HOSTS), req.user.id))
+      q.Paginate(q.Match(q.Index(DB_INDEX_HOST_GUESTS), req.user.id))
     );
     const guests = guestsArrays.data.map(
       ([
