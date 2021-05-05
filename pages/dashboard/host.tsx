@@ -19,7 +19,7 @@ export default function Dashboard() {
   return (
     <DashboardContainer>
       <PageContainer>
-        <h1 className="text-4xl z-10">Hosts</h1>
+        <h1 className="text-4xl z-10 text-center">Hosts</h1>
         <DashboardHostContent />
       </PageContainer>
     </DashboardContainer>

@@ -10,6 +10,7 @@ export default function Invite(props) {
   return (
     <div>
       <CenteredContainer>
+        <h2 className="text-3xl mt-12 mb-8">Allow Host</h2>
         <CenteredCard>
           <InviteContent {...props} />
         </CenteredCard>

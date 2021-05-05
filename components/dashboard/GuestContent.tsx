@@ -1,7 +1,8 @@
 import useChannelName from "../../hooks/useChannelName";
 import useToken from "../../hooks/useToken";
 import useAxios from "../../hooks/useAxios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { LogCard, StatusLabel } from "../common";
 
 export default function GuestContent() {
   const [channelName] = useChannelName();
@@ -36,31 +37,64 @@ export default function GuestContent() {
   const rawHostElements = rawHosts.map((host) => {
     const date = new Date(host.createdDate);
     return (
-      <div key={host.createdDate}>
-        {host.hostChannelName} - {JSON.stringify(host.allowed)} -{" "}
-        {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
-      </div>
+      <tr key={host.createdDate}>
+        <td>{host.hostChannelName}</td>
+        <td>
+          <StatusLabel allowed={host.allowed}>
+            {JSON.stringify(host.allowed)}
+          </StatusLabel>
+        </td>
+        <td>
+          {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
+        </td>
+      </tr>
     );
   });
 
   const hostElements = hosts.map((host) => {
     const date = new Date(host.createdDate);
     return (
-      <div key={host.createdDate}>
-        {host.hostChannelName} - {JSON.stringify(host.allowed)} -{" "}
-        {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
-      </div>
+      <tr key={host.createdDate}>
+        <td>{host.hostChannelName}</td>
+        <td>
+          <button
+            type="button"
+            onClick={() => {
+              axios
+                .post("/api/set-permission", {
+                  twitchId: host.hostId,
+                  allowed: false,
+                })
+                .then(() => {
+                  setHosts(
+                    hosts.filter((currentHost) => {
+                      return currentHost.hostId === host.hostId;
+                    })
+                  );
+                });
+            }}
+          >
+            Revoke
+          </button>
+        </td>
+      </tr>
     );
   });
 
   return (
     <>
-      <h1>Allowed List</h1>
-      <p>These are the stream allowed to host you.</p>
-      <h2>Raw</h2>
-      {rawHostElements}
-      <h2>Filtered</h2>
-      {hostElements}
+      <div className="flex flex-row space-x-4 justify-center">
+        <LogCard>
+          <h2>Allowed List</h2>
+          <p>These are the streams allowed to host you.</p>
+          <table>{hostElements}</table>
+        </LogCard>
+        <LogCard>
+          <h2>Full History</h2>
+          <p>This shows every change to your status in various streams.</p>
+          <table>{rawHostElements}</table>
+        </LogCard>
+      </div>
     </>
   );
 }

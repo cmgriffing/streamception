@@ -11,7 +11,13 @@ const CustomStyles = createGlobalStyle`
   }
 
   * {
+    font-family: 'Open Sans', sans-serif;
     color: ${colors.text};
+  }
+
+  h1, h2 {
+    font-family: 'Lobster Two', cursive;
+    font-weight: 700;
   }
 `;
 
