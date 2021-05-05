@@ -66,15 +66,19 @@ export default function GuestContent() {
           <td>
             <button
               onClick={() => {
+                setHiddenGuestsMap({
+                  ...hiddenGuestsMap,
+                  [guest.guestId]: true,
+                });
                 axios
                   .post(`/api/set-hidden`, {
                     twitchId: guest.guestId,
                     hidden: true,
                   })
-                  .then(() => {
+                  .catch(() => {
                     setHiddenGuestsMap({
                       ...hiddenGuestsMap,
-                      [guest.guestId]: true,
+                      [guest.guestId]: false,
                     });
                   });
               }}
@@ -98,15 +102,19 @@ export default function GuestContent() {
           <td>
             <button
               onClick={() => {
+                setHiddenGuestsMap({
+                  ...hiddenGuestsMap,
+                  [guest.guestId]: false,
+                });
                 axios
                   .post(`/api/set-hidden`, {
                     twitchId: guest.guestId,
                     hidden: false,
                   })
-                  .then(() => {
+                  .catch(() => {
                     setHiddenGuestsMap({
                       ...hiddenGuestsMap,
-                      [guest.guestId]: false,
+                      [guest.guestId]: true,
                     });
                   });
               }}
