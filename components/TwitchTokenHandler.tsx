@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { writeStorage } from "@rehooks/local-storage";
 import useToken, { LOCALSTORAGE_TOKEN_KEY } from "../hooks/useToken";
@@ -9,14 +9,20 @@ import usePreviousRoute from "../hooks/usePreviousRoute";
 
 export default function BaseTwitchTokenHandler() {
   const router = useRouter();
-  const [token] = useToken();
   const [previousRoute] = usePreviousRoute();
+  const [token, setToken] = useState("");
   const axios = useAxios(token);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = window.location.hash.split("&")[0]?.substring(14);
       window.localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token);
+      setToken(token);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
       axios.get(`/api/get-twitch-details`).then((response: any) => {
         window.localStorage.setItem(
           LOCALSTORAGE_TWITCH_ID_KEY,
@@ -28,7 +34,7 @@ export default function BaseTwitchTokenHandler() {
         );
       });
     }
-  }, [router]);
+  }, [token]);
 
   useEffect(() => {
     if (!previousRoute || !token) {

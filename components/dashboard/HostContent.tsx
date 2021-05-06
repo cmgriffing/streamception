@@ -31,8 +31,6 @@ export default function GuestContent() {
         (guest: DBInvitation) => guest.allowed
       );
 
-      console.log({ filteredGuests });
-
       filteredGuests.sort((a: any, b: any) => {
         return a.createdDate - b.createdDate;
       });
@@ -44,7 +42,6 @@ export default function GuestContent() {
 
   useEffect(() => {
     axios.get("/api/get-host-hidden-guests").then((result) => {
-      console.log("data, ", result.data);
       setHiddenGuestsMap(
         result.data.reduce((accumulator, current, wholeArray) => {
           accumulator[current.guestId] = current.hidden;

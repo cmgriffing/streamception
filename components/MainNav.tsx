@@ -15,7 +15,6 @@ const CustomLink = ({ href, children, ...props }) => {
   const { asPath } = useRouter();
   let { activeClassName, as } = props;
   if (!activeClassName) {
-    console.log("setting active");
     activeClassName = "active";
   }
   let child: any;
@@ -33,7 +32,6 @@ const CustomLink = ({ href, children, ...props }) => {
     asPath === href || asPath === as
       ? `${childClassName} ${activeClassName}`.trim()
       : childClassName;
-  console.log({ className, childClassName, props });
   return (
     <Link href={href} {...props} passHref>
       {React.cloneElement(child, {
