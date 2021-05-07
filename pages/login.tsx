@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {
   CenteredContainer,
   CenteredCard,
-  SecondaryButton,
+  TwitchButton,
 } from "../components/common";
 import styled from "styled-components";
 import { colors } from "../util/colors";
@@ -21,11 +21,11 @@ export default function Login({ redirectUrl, clientId }) {
       <CenteredCard>
         <Title>Login or Signup</Title>
         <div className="pt-4 text-center">
-          <SecondaryButton
+          <TwitchButton
             href={`https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`}
           >
-            Login with Twitch
-          </SecondaryButton>
+            Login with Twitch <img src="/twitch-logo.png" />
+          </TwitchButton>
         </div>
       </CenteredCard>
     </CenteredContainer>

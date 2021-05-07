@@ -61,7 +61,7 @@ function MainNav() {
       <NavList>
         {!token && (
           <li>
-            <Link href="/login">Login/Signup</Link>
+            <Link href="/login">Login</Link>
           </li>
         )}
         {token && (

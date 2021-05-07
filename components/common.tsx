@@ -39,6 +39,19 @@ export const SecondaryButton = styled(PrimaryButton)`
   background: ${colors.bg};
   color: ${colors.text};
 `;
+export const TwitchButton = styled(SecondaryButton)`
+  ${tw`flex flex-row`}
+
+  background: #8205b4;
+  color: white;
+  margin: 0 auto;
+
+  img {
+    height: auto;
+    width: 21px;
+    margin-left: 8px;
+  }
+`;
 
 export const LogCard = styled(Card)`
   color: ${colors.bg};

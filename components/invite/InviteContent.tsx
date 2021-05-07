@@ -4,7 +4,7 @@ import useAxios from "../../hooks/useAxios";
 import { LOCALSTORAGE_PREVIOUS_ROUTE_KEY } from "../../hooks/usePreviousRoute";
 import styled from "styled-components";
 import { colors } from "../../util/colors";
-import { SecondaryButton } from "../common";
+import { SecondaryButton, TwitchButton } from "../common";
 import tw from "twin.macro";
 import { TokenContext } from "../../context/token";
 const Paragraph = styled.p`
@@ -78,18 +78,18 @@ export default function InviteContent({ clientId, redirectUrl }) {
     return (
       <>
         <Paragraph>
-          You are about to allow a streamer to show your stream on theirs. We
-          need you to log in first.
+          First we need to connect Streamception to Twitch. Then, you can
+          authorize a streamer to host you.
         </Paragraph>
 
         <div className="pt-4 text-center">
-          <SecondaryButton
+          <TwitchButton
             onClick={() => {
               handleAcceptanceClick();
             }}
           >
-            Proceed
-          </SecondaryButton>
+            Login with Twitch <img src="/twitch-logo.png" />
+          </TwitchButton>
         </div>
       </>
     );
