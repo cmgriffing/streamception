@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import { LOCALSTORAGE_PREVIOUS_ROUTE_KEY } from "../../hooks/usePreviousRoute";
-import useToken from "../../hooks/useToken";
 import styled from "styled-components";
 import { colors } from "../../util/colors";
 import { SecondaryButton } from "../common";
 import tw from "twin.macro";
+import { TokenContext } from "../../context/token";
 const Paragraph = styled.p`
   color: ${colors.bg};
 `;
@@ -21,15 +21,17 @@ const ChannelName = styled.b`
 
 export default function InviteContent({ clientId, redirectUrl }) {
   const router = useRouter();
-  const [token] = useToken();
+  const [token] = useContext(TokenContext);
   const axios = useAxios(token);
   const { twitchId } = router.query;
   const [channelName, setChannelName] = useState("");
 
   useEffect(() => {
-    axios.post(`/api/get-twitch-details/${twitchId}`).then((result) => {
-      setChannelName(result.data.channelName);
-    });
+    if (token) {
+      axios.post(`/api/get-twitch-details/${twitchId}`).then((result) => {
+        setChannelName(result.data.channelName);
+      });
+    }
   }, []);
 
   function handleAcceptanceClick() {
@@ -45,7 +47,7 @@ export default function InviteContent({ clientId, redirectUrl }) {
     } else {
       window.localStorage.setItem(
         LOCALSTORAGE_PREVIOUS_ROUTE_KEY,
-        `/invite/twitchId`
+        `/invite/${twitchId}`
       );
 
       const url = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`;
@@ -53,22 +55,43 @@ export default function InviteContent({ clientId, redirectUrl }) {
       window.location.href = url;
     }
   }
-  return (
-    <>
-      <Paragraph>
-        Allow <ChannelName>{channelName}</ChannelName> to watch your stream on
-        their own?
-      </Paragraph>
+  if (token) {
+    return (
+      <>
+        <Paragraph>
+          Allow <ChannelName>{channelName}</ChannelName> to watch your stream on
+          their own?
+        </Paragraph>
 
-      <div className="pt-4 text-center">
-        <SecondaryButton
-          onClick={() => {
-            handleAcceptanceClick();
-          }}
-        >
-          Proceed
-        </SecondaryButton>
-      </div>
-    </>
-  );
+        <div className="pt-4 text-center">
+          <SecondaryButton
+            onClick={() => {
+              handleAcceptanceClick();
+            }}
+          >
+            Proceed
+          </SecondaryButton>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Paragraph>
+          You are about to allow a streamer to show your stream on theirs. We
+          need you to log in first.
+        </Paragraph>
+
+        <div className="pt-4 text-center">
+          <SecondaryButton
+            onClick={() => {
+              handleAcceptanceClick();
+            }}
+          >
+            Proceed
+          </SecondaryButton>
+        </div>
+      </>
+    );
+  }
 }

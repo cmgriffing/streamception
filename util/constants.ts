@@ -5,3 +5,5 @@ export const DB_INDEX_HOST_GUESTS = "HostGuests";
 export const DB_INDEX_GUEST_HOSTS = "GuestHosts";
 export const DB_INDEX_HIDDEN_GUEST = "HiddenGuest";
 export const DB_INDEX_HIDDEN_GUESTS = "HiddenGuests";
+
+export const LOCALSTORAGE_TOKEN_KEY = "token";

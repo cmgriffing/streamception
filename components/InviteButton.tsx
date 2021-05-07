@@ -1,12 +1,13 @@
+import { useContext } from "react";
 import styled from "styled-components";
-import useToken from "../hooks/useToken";
+import { TokenContext } from "../context/token";
 import useTwitchId from "../hooks/useTwitchId";
 import { PrimaryButton } from "./common";
 
 const InviteButtonElement = styled(PrimaryButton)``;
 
 export default function InviteButton() {
-  const [token] = useToken();
+  const [token] = useContext(TokenContext);
   const [twitchId] = useTwitchId();
   if (token) {
     return (

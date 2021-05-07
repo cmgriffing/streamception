@@ -2,10 +2,12 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { colors } from "../util/colors";
 import Link from "next/link";
-import useToken from "../hooks/useToken";
 import { useRouter } from "next/router";
-import { Children } from "react";
+import { Children, useContext, useEffect, useState } from "react";
 import React from "react";
+import { TokenContext } from "../context/token";
+import { LOCALSTORAGE_TOKEN_KEY } from "../util/constants";
+import axios from "axios";
 
 const NavList = styled.ul`
   ${tw`flex flex-row list-none p-0`}
@@ -52,7 +54,8 @@ const NavLink = styled.a`
 `;
 
 function MainNav() {
-  const [token] = useToken();
+  const [token] = useContext(TokenContext);
+
   return (
     <nav>
       <NavList>

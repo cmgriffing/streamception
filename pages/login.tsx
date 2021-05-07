@@ -1,18 +1,32 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { CenteredContainer, CenteredCard } from "../components/common";
+import {
+  CenteredContainer,
+  CenteredCard,
+  SecondaryButton,
+} from "../components/common";
+import styled from "styled-components";
+import { colors } from "../util/colors";
+import tw from "twin.macro";
+
+const Title = styled.h2`
+  ${tw`text-3xl mb-4 text-center`}
+
+  color: ${colors.bg};
+`;
 
 export default function Login({ redirectUrl, clientId }) {
   return (
     <CenteredContainer>
       <CenteredCard>
-        <h1 className="text-5xl z-10">Login or Signup</h1>
-        <p>Either way just click the button below.</p>
-        <Link
-          href={`https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`}
-        >
-          Login
-        </Link>
+        <Title>Login or Signup</Title>
+        <div className="pt-4 text-center">
+          <SecondaryButton
+            href={`https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`}
+          >
+            Login with Twitch
+          </SecondaryButton>
+        </div>
       </CenteredCard>
     </CenteredContainer>
   );

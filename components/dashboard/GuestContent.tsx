@@ -1,12 +1,11 @@
 import useChannelName from "../../hooks/useChannelName";
-import useToken from "../../hooks/useToken";
 import useAxios from "../../hooks/useAxios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LogCard, StatusLabel } from "../common";
+import { TokenContext } from "../../context/token";
 
 export default function GuestContent() {
-  const [channelName] = useChannelName();
-  const [token] = useToken();
+  const [token] = useContext(TokenContext);
   const axios = useAxios(token);
   const [rawHosts, setRawHosts] = useState([]);
   const [hosts, setHosts] = useState([]);
@@ -51,35 +50,40 @@ export default function GuestContent() {
     );
   });
 
-  const hostElements = hosts.map((host) => {
-    const date = new Date(host.createdDate);
-    return (
-      <tr key={host.createdDate}>
-        <td>{host.hostChannelName}</td>
-        <td>
-          <button
-            type="button"
-            onClick={() => {
-              axios
-                .post("/api/set-permission", {
-                  twitchId: host.hostId,
-                  allowed: false,
-                })
-                .then(() => {
-                  setHosts(
-                    hosts.filter((currentHost) => {
-                      return currentHost.hostId === host.hostId;
-                    })
-                  );
-                });
-            }}
-          >
-            Revoke
-          </button>
-        </td>
-      </tr>
-    );
-  });
+  const hostElements = hosts
+    .filter((host) => host.allowed)
+    .map((host) => {
+      return (
+        <tr key={host.createdDate}>
+          <td>{host.hostChannelName}</td>
+          <td>
+            <button
+              type="button"
+              onClick={() => {
+                const oldHosts = [...hosts];
+
+                setHosts(
+                  hosts.filter((currentHost) => {
+                    return currentHost.hostId !== host.hostId;
+                  })
+                );
+
+                axios
+                  .post("/api/set-permission", {
+                    twitchId: host.hostId,
+                    allowed: false,
+                  })
+                  .catch(() => {
+                    setHosts(oldHosts);
+                  });
+              }}
+            >
+              Revoke
+            </button>
+          </td>
+        </tr>
+      );
+    });
 
   return (
     <>

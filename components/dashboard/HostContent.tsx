@@ -1,13 +1,13 @@
 import useChannelName from "../../hooks/useChannelName";
-import useToken from "../../hooks/useToken";
 import useAxios from "../../hooks/useAxios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LogCard } from "../common";
 import { DBInvitation } from "../../util/types";
+import { TokenContext } from "../../context/token";
 
 export default function GuestContent() {
   const [channelName] = useChannelName();
-  const [token] = useToken();
+  const [token] = useContext(TokenContext);
   const axios = useAxios(token);
   const [rawGuests, setRawGuests] = useState([]);
   const [guests, setGuests] = useState([]);
