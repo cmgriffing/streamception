@@ -19,7 +19,6 @@ export default function Dashboard() {
   return (
     <DashboardContainer>
       <PageContainer>
-        <h1 className="text-4xl z-10">Dashboard</h1>
         <DashboardIndexContent />
       </PageContainer>
     </DashboardContainer>

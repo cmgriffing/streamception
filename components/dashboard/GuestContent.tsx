@@ -44,7 +44,7 @@ export default function GuestContent() {
           </StatusLabel>
         </td>
         <td>
-          {date.getMonth() + 1}/{date.getDate() + 1}/{date.getFullYear()}
+          {date.getMonth() + 1}/{date.getDate()}/{date.getFullYear()}
         </td>
       </tr>
     );

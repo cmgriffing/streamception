@@ -8,6 +8,7 @@ import Head from "next/head";
 import { TokenContext } from "../context/token";
 import { useEffect, useState } from "react";
 import { LOCALSTORAGE_TOKEN_KEY } from "../util/constants";
+import Link from "next/link";
 
 const MainNav = dynamic(() => import("../components/MainNav"), { ssr: false });
 const InviteButton = dynamic(() => import("../components/InviteButton"), {
@@ -49,6 +50,11 @@ function MyApp({ Component, pageProps }) {
     }
   }, [token, currentToken]);
 
+  let homeLink = "/";
+  if (token) {
+    homeLink = "/dashboard";
+  }
+
   return (
     <TokenContext.Provider value={tokenState}>
       <div className="flex flex-col h-screen">
@@ -64,7 +70,11 @@ function MyApp({ Component, pageProps }) {
         <GlobalStyles />
         <PageContainer>
           <Header>
-            <Title>Streamception</Title>
+            <Link href={homeLink} passHref={true}>
+              <a>
+                <Title>Streamception</Title>
+              </a>
+            </Link>
             <MainNav />
             <InviteButton />
           </Header>

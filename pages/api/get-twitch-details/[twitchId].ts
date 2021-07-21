@@ -12,7 +12,7 @@ export default withUser(async (req: NextApiRequestWithUser, res) => {
       },
     })
     .catch((error) => {
-      console.log({ error });
+      // console.log({ error });
     });
 
   const { display_name } = userResponse?.data?.data[0];
