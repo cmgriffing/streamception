@@ -28,7 +28,7 @@ export const Card = styled.div`
 export const CenteredCard = styled(Card)``;
 
 export const PrimaryButton = styled.button`
-  ${tw`px-6 py-2 rounded shadow border-2 border-solid font-bold`}
+  ${tw`px-6 py-2 rounded shadow border-2 border-solid font-bold justify-center transition filter hover:brightness-125 active:brightness-75`}
 
   border-color: ${colors.text};
   background: ${colors.lightBg};

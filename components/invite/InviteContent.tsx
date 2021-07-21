@@ -34,6 +34,8 @@ export default function InviteContent({ clientId, redirectUrl }) {
     }
   }, []);
 
+  const loginUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`;
+
   function handleAcceptanceClick() {
     if (token) {
       axios
@@ -50,9 +52,7 @@ export default function InviteContent({ clientId, redirectUrl }) {
         `/invite/${twitchId}`
       );
 
-      const url = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`;
-
-      window.location.href = url;
+      window.location.href = loginUrl;
     }
   }
   if (token) {
@@ -83,11 +83,7 @@ export default function InviteContent({ clientId, redirectUrl }) {
         </Paragraph>
 
         <div className="pt-4 text-center">
-          <TwitchButton
-            onClick={() => {
-              handleAcceptanceClick();
-            }}
-          >
+          <TwitchButton as="a" href={loginUrl}>
             Login with Twitch <img src="/twitch-logo.png" />
           </TwitchButton>
         </div>

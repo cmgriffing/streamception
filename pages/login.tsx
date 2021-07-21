@@ -22,6 +22,7 @@ export default function Login({ redirectUrl, clientId }) {
         <Title>Login or Signup</Title>
         <div className="pt-4 text-center">
           <TwitchButton
+            as="a"
             href={`https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=user_read`}
           >
             Login with Twitch <img src="/twitch-logo.png" />

@@ -30,7 +30,9 @@ export default function Home() {
         <p className="text-3xl z-10">
           Cleanly manage who you can show on your stream and vice versa.
         </p>
-        <GetStartedButton href="/login">Get Started</GetStartedButton>
+        <GetStartedButton as="a" href="/login">
+          Get Started
+        </GetStartedButton>
         <HeroFill />
       </Hero>
     </>
