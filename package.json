@@ -9,7 +9,7 @@
     "export": "next export"
   },
   "dependencies": {
-    "@rehooks/local-storage": "^2.4.1",
+    "@rehooks/local-storage": "2.4.0",
     "autoprefixer": "^10.2.5",
     "axios": "^0.21.1",
     "faunadb": "^4.2.0",

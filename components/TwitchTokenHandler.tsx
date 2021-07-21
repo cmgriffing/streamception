@@ -6,6 +6,7 @@ import useAxios from "../hooks/useAxios";
 import usePreviousRoute from "../hooks/usePreviousRoute";
 import { TokenContext } from "../context/token";
 import { LOCALSTORAGE_TOKEN_KEY } from "../util/constants";
+import { writeStorage } from "@rehooks/local-storage";
 
 export default function BaseTwitchTokenHandler() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function BaseTwitchTokenHandler() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = window.location.hash.split("&")[0]?.substring(14);
-      window.localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token);
+      writeStorage(LOCALSTORAGE_TOKEN_KEY, token);
       setToken(token);
     }
   }, []);
@@ -25,14 +26,8 @@ export default function BaseTwitchTokenHandler() {
   useEffect(() => {
     if (token) {
       axios.get(`/api/get-twitch-details`).then((response: any) => {
-        window.localStorage.setItem(
-          LOCALSTORAGE_TWITCH_ID_KEY,
-          response.data.twitchId
-        );
-        window.localStorage.setItem(
-          LOCALSTORAGE_TWITCH_NAME_KEY,
-          response.data.channelName
-        );
+        writeStorage(LOCALSTORAGE_TWITCH_ID_KEY, response.data.twitchId);
+        writeStorage(LOCALSTORAGE_TWITCH_NAME_KEY, response.data.channelName);
       });
     }
   }, [token]);
